@@ -1,0 +1,69 @@
+ext {
+
+    javaVersion = JavaVersion.VERSION_1_8
+
+    roomVersion = "2.4.1"
+    roomDependencies = [
+            runTime : "androidx.room:room-runtime:${roomVersion}",
+            compiler: "androidx.room:room-compiler:${roomVersion}",
+            kapt    : "androidx.room:room-compiler:${roomVersion}",
+            rxJava2 : "androidx.room:room-rxjava2:${roomVersion}",
+            paging  : "androidx.room:room-paging:${roomVersion}"
+    ]
+
+    rxJavaVersion = "2.1.1"
+    rxJavaDependencies = [
+            rxAndroid: "io.reactivex.rxjava2:rxandroid:$rxJavaVersion"
+    ]
+
+    hiltVersion = "2.38.1"
+    hiltDependencies = [
+            android : "com.google.dagger:hilt-android:$hiltVersion",
+            compiler: "com.google.dagger:hilt-compiler:$hiltVersion"
+    ]
+
+    navigationVersion = "2.4.0"
+    navigationDependencies = [
+            fragment: "androidx.navigation:navigation-fragment-ktx:$navigationVersion",
+            ui      : "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    ]
+
+    retrofitVersion = "2.9.0"
+    retrofitDependencies = [
+            retrofit     : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            rxJavaAdapter: "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            gsonConverter: "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    ]
+
+    okhttp3Version = "4.9.1"
+    okhttp3Dependencies = [
+            loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttp3Version"
+    ]
+
+    glideVersion = "4.12.0"
+    glideDependencies = [
+            glide        : "com.github.bumptech.glide:glide:$glideVersion",
+            glideCompiler: "com.github.bumptech.glide:compiler:$glideVersion"
+    ]
+
+    androidxCoreVersion = "1.7.0"
+    androidxAppCompactVersion = "1.4.1"
+    androidxConstraintLayoutVersion = "2.1.3"
+    androidxDependencies = [
+            core            : "androidx.core:core-ktx:$androidxCoreVersion",
+            appCompact      : "androidx.appcompat:appcompat:$androidxAppCompactVersion",
+            constraintLayout: "androidx.constraintlayout:constraintlayout:$androidxConstraintLayoutVersion"
+    ]
+
+    materialVersion = "1.5.0"
+    materialDependencies = [
+            material: "com.google.android.material:material:$materialVersion"
+    ]
+
+    mockkVersion = "1.12.0"
+    junitVersion = "4.13.2"
+    testDependencies = [
+            mockK: "io.mockk:mockk:$mockkVersion",
+            jUnit: "junit:junit:$junitVersion"
+    ]
+}
