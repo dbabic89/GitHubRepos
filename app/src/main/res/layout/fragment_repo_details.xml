@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="data"
+            type="com.dariobabic.githubrepos.features.repos.presentation.details.RepoDetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="@{data.loading ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textDescription"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center_horizontal"
+            android:text="@{data.description}"
+            android:visibility="@{TextUtils.isEmpty(data.description) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressIndicator"
+            tools:text="Search for repositories on GitHub" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageOwnerAvatar"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="48dp"
+            android:onClick="@{() -> data.openOwnerDetails()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textDescription"
+            app:loadImageFromURL="@{data.ownerAvatarUrl}"
+            tools:src="@tools:sample/avatars" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:barrierMargin="48dp"
+            app:constraint_referenced_ids="imageOwnerAvatar" />
+
+        <TextView
+            android:id="@+id/textOwnerName"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:text="@{data.ownerName}"
+            app:layout_constraintEnd_toEndOf="@+id/imageOwnerAvatar"
+            app:layout_constraintStart_toStartOf="@+id/imageOwnerAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/imageOwnerAvatar"
+            tools:text="Dario Babic" />
+
+        <TextView
+            android:id="@+id/textLanguage"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="end"
+            android:text="@{data.language}"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toBottomOf="@+id/textDescription"
+            tools:text="Kotlin" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageWatcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textWatcherCount"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toTopOf="@+id/textWatcherCount"
+            app:srcCompat="@drawable/ic_watchers" />
+
+        <TextView
+            android:id="@+id/textWatcherCount"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="end"
+            android:text="@{String.format(@string/watching, data.watchers)}"
+            app:layout_constraintStart_toEndOf="@+id/imageWatcher"
+            app:layout_constraintTop_toBottomOf="@+id/textLanguage"
+            tools:text="9.9M watchers" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageFork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textForkCount"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toTopOf="@+id/textForkCount"
+            app:srcCompat="@drawable/ic_forks" />
+
+        <TextView
+            android:id="@+id/textForkCount"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="end"
+            android:text="@{@plurals/fork(data.forkCount, data.forks)}"
+            app:layout_constraintStart_toEndOf="@+id/imageFork"
+            app:layout_constraintTop_toBottomOf="@+id/textWatcherCount"
+            tools:text="9.9M forks" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageIssue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textIssueCount"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toTopOf="@+id/textIssueCount"
+            app:srcCompat="@drawable/ic_issues" />
+
+        <TextView
+            android:id="@+id/textIssueCount"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="end"
+            android:text="@{@plurals/issue(data.issueCount, data.issues)}"
+            app:layout_constraintStart_toEndOf="@+id/imageIssue"
+            app:layout_constraintTop_toBottomOf="@+id/textForkCount"
+            tools:text="0 issues" />
+
+        <TextView
+            android:id="@+id/textCreatedAt"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{@string/created_at(data.createdAt)}"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toBottomOf="@+id/textIssueCount"
+            tools:text="Created: 28.1.2022" />
+
+        <TextView
+            android:id="@+id/textUpdatedAt"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{String.format(@string/updated_at, data.updatedAt)}"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toBottomOf="@+id/textCreatedAt"
+            tools:text="Updated: 2.2.2022" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:onClick="@{() -> data.openRepoDetailsLink()}"
+            android:text="@string/open_repository_in_browser"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

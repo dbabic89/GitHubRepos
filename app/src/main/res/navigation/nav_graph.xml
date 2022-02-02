@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchRepositoriesFragment">
+
+    <fragment
+        android:id="@+id/searchRepositoriesFragment"
+        android:name="com.dariobabic.githubrepos.features.repos.presentation.search.SearchReposFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_search_repos">
+        <action
+            android:id="@+id/action_searchRepositoriesFragment_to_repoDetailsFragment"
+            app:destination="@id/repoDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/repoDetailsFragment"
+        android:name="com.dariobabic.githubrepos.features.repos.presentation.details.RepoDetailsFragment"
+        android:label="{repoName}"
+        tools:layout="@layout/fragment_repo_details">
+        <argument
+            android:name="repoName"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_userGlobal"
+        app:destination="@id/userFragment" />
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.dariobabic.githubrepos.features.user.presentation.UserFragment"
+        android:label="{name}"
+        tools:layout="@layout/fragment_user">
+        <argument
+            android:name="name"
+            android:defaultValue="Profile"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="isOwner"
+            android:defaultValue="false"
+            app:argType="boolean"
+            app:nullable="false" />
+    </fragment>
+</navigation>

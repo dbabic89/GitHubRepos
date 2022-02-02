@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">GitHubRepos</string>
+    <string name="watching">%s watching</string>
+    <string name="sort_by">Sort By</string>
+    <string name="stars">Stars</string>
+    <string name="forks">Forks</string>
+    <string name="updated">Updated</string>
+    <string name="created_at">Created: %s</string>
+    <string name="updated_at">Updated: %s</string>
+    <string name="open_repository_in_browser">Open Repository in browser</string>
+    <string name="open_profile_in_browser">Open profile in browser</string>
+    <string name="following">%s Following</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="profile">Profile</string>
+
+    <plurals name="fork">
+        <item quantity="zero">%s forks</item>
+        <item quantity="one">%s fork</item>
+        <item quantity="many">%s forks</item>
+        <item quantity="other">%s forks</item>
+    </plurals>
+
+    <plurals name="issue">
+        <item quantity="zero">%s issues</item>
+        <item quantity="one">%s issue</item>
+        <item quantity="many">%s issues</item>
+        <item quantity="other">%s issues</item>
+    </plurals>
+
+    <plurals name="followers">
+        <item quantity="zero">%s Followers</item>
+        <item quantity="one">%s Follower</item>
+        <item quantity="many">%s Followers</item>
+        <item quantity="other">%s Followers</item>
+    </plurals>
+
+    <plurals name="public_repos">
+        <item quantity="zero">%d Public Repos</item>
+        <item quantity="one">%d Public Repo</item>
+        <item quantity="many">%d Public Repos</item>
+        <item quantity="other">%d Public Repos</item>
+    </plurals>
+</resources>

@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.dariobabic.githubrepos"
+        minSdk 23
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    annotationProcessor roomDependencies.compiler
+    implementation roomDependencies.runTime
+    implementation roomDependencies.rxJava2
+    implementation roomDependencies.paging
+    kapt roomDependencies.kapt
+
+    implementation rxJavaDependencies.rxAndroid
+
+    implementation hiltDependencies.android
+    kapt hiltDependencies.compiler
+
+    implementation navigationDependencies.fragment
+    implementation navigationDependencies.ui
+
+    implementation retrofitDependencies.retrofit
+    implementation retrofitDependencies.rxJavaAdapter
+    implementation retrofitDependencies.gsonConverter
+
+    implementation okhttp3Dependencies.loggingInterceptor
+
+    implementation glideDependencies.glide
+    annotationProcessor glideDependencies.glideCompiler
+
+    implementation androidxDependencies.core
+    implementation androidxDependencies.appCompact
+    implementation androidxDependencies.constraintLayout
+
+    implementation materialDependencies.material
+
+    testImplementation testDependencies.mockK
+    testImplementation testDependencies.jUnit
+}

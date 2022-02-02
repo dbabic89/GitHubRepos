@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="data"
+            type="com.dariobabic.githubrepos.features.user.presentation.UserViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="@{data.loading ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="@{data.loading == false}"
+            android:onClick="@{() -> data.login()}"
+            android:text="@string/login"
+            android:visibility="@{data.loginVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{data.displayInfo ? View.VISIBLE : View.GONE}"
+            app:constraint_referenced_ids="imageAvatar,textBio,textCompany,textLocation,textBlog,textCreatedAt,textFollowers,textFollowing,textPublicReposCount" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageAvatar"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/progressIndicator"
+            app:loadImageFromURL="@{data.avatarUrl}"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textBio"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+            android:text="@{data.bio}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageAvatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="In west Philadelphia born and raised \nOn the playground was where I spent most of my days" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:visibility="@{TextUtils.isEmpty(data.company) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageAvatar"
+            app:srcCompat="@drawable/ic_company" />
+
+        <TextView
+            android:id="@+id/textCompany"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:gravity="center_horizontal"
+            android:text="@{data.company}"
+            app:layout_constraintBottom_toBottomOf="@+id/imageCompany"
+            app:layout_constraintStart_toEndOf="@+id/imageCompany"
+            app:layout_constraintTop_toTopOf="@+id/imageCompany"
+            tools:text="Virgin Pulse" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:visibility="@{TextUtils.isEmpty(data.location) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageCompany"
+            app:srcCompat="@drawable/ic_location" />
+
+        <TextView
+            android:id="@+id/textLocation"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:gravity="center_horizontal"
+            android:text="@{data.location}"
+            app:layout_constraintBottom_toBottomOf="@+id/imageLocation"
+            app:layout_constraintStart_toEndOf="@+id/imageLocation"
+            app:layout_constraintTop_toTopOf="@+id/imageLocation"
+            tools:text="Zepce" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageBlog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:visibility="@{TextUtils.isEmpty(data.blog) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageLocation"
+            app:srcCompat="@drawable/ic_blog" />
+
+        <TextView
+            android:id="@+id/textBlog"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:gravity="center_horizontal"
+            android:onClick="@{() -> data.openBlogLink()}"
+            android:text="@{data.blog}"
+            android:textColor="@color/teal_700"
+            app:layout_constraintBottom_toBottomOf="@+id/imageBlog"
+            app:layout_constraintStart_toEndOf="@+id/imageBlog"
+            app:layout_constraintTop_toTopOf="@+id/imageBlog"
+            tools:text="medium.com/dbabic89" />
+
+        <TextView
+            android:id="@+id/textCreatedAt"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{@string/created_at(data.createdAt)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageBlog"
+            tools:text="Created: 28.1.2022" />
+
+        <TextView
+            android:id="@+id/textFollowers"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center_horizontal"
+            android:text="@{@plurals/followers(data.followersCount, data.followers)}"
+            app:layout_constraintEnd_toStartOf="@+id/textFollowing"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textCreatedAt"
+            tools:text="999 Followers" />
+
+        <TextView
+            android:id="@+id/textFollowing"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@{String.format(@string/following, data.following)}"
+            app:layout_constraintBottom_toBottomOf="@+id/textFollowers"
+            app:layout_constraintEnd_toEndOf="@+id/textPublicReposCount"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textFollowers"
+            app:layout_constraintTop_toTopOf="@+id/textFollowers"
+            tools:text="1 Following" />
+
+        <TextView
+            android:id="@+id/textPublicReposCount"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@{@plurals/public_repos(data.publicReposCount, data.publicReposCount)}"
+            app:layout_constraintBottom_toBottomOf="@+id/textFollowing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textFollowing"
+            app:layout_constraintTop_toTopOf="@+id/textFollowing"
+            tools:text="99 Public Repos" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:addAdapter="@{data.adapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textFollowers"
+            tools:listitem="@layout/item_user_repo" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonDetailsLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{() -> data.openDetailsLink()}"
+            android:text="@string/open_profile_in_browser"
+            android:visibility="@{data.isOwner ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{() -> data.logout()}"
+            android:text="@string/logout"
+            android:visibility="@{data.logoutVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
