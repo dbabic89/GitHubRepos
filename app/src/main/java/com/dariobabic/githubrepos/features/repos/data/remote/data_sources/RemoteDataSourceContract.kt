@@ -5,5 +5,5 @@ import io.reactivex.Observable
 
 interface RemoteDataSourceContract {
 
-    fun getSearchedRepos(query: String, sort: String): Observable<SearchReposResponse>
+    fun getSearchedRepos(query: String): Observable<SearchReposResponse>
 }

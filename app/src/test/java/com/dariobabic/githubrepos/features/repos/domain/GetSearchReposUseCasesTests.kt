@@ -23,7 +23,7 @@ class GetSearchReposUseCasesTests {
         MockKAnnotations.init(this)
         useCase = GetSearchReposUseCase(repository)
 
-        every { repository.getSearchedRepos(any(), any()) } returns
+        every { repository.getSearchedRepos(any()) } returns
                 Observable.fromArray(fakeEntityListOf2)
     }
 
@@ -31,11 +31,10 @@ class GetSearchReposUseCasesTests {
     fun useCase_execute_returnsCompleted() {
         // GIVEN
         val query = "android"
-        val sort = "stars"
 
         useCase
             // WHEN
-            .setup(query, sort)
+            .setup(query)
             .buildUseCaseObservable()
             .test()
             // THEN
@@ -46,14 +45,13 @@ class GetSearchReposUseCasesTests {
     fun useCase_execute_verifyFunctionCalls() {
         // GIVEN
         val query = "android"
-        val sort = "stars"
 
         useCase
             // WHEN
-            .setup(query, sort)
+            .setup(query)
             .buildUseCaseObservable()
             .test()
         // THEN
-        verify(exactly = 1) { repository.getSearchedRepos(any(), any()) }
+        verify(exactly = 1) { repository.getSearchedRepos(any()) }
     }
 }

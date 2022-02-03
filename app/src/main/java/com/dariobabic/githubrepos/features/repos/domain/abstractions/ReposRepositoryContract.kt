@@ -9,7 +9,9 @@ interface ReposRepositoryContract {
 
     fun clearRepos(): Completable
 
-    fun getSearchedRepos(query: String, sort: String): Observable<List<RepoEntity>>
+    fun getSearchedRepos(query: String): Observable<List<RepoEntity>>
+
+    fun loadRepos(): Observable<List<RepoEntity>>
 
     fun loadRepo(name: String): Single<RepoEntity>
 }

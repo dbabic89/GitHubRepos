@@ -7,6 +7,6 @@ class RemoteDataSource @Inject constructor(
     private val service: ReposService
 ) : RemoteDataSourceContract {
 
-    override fun getSearchedRepos(query: String, sort: String) =
-        service.getSearchedRepos(query, sort)
+    override fun getSearchedRepos(query: String) =
+        service.getSearchedRepos(query)
 }

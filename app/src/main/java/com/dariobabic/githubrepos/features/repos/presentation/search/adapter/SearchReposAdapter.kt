@@ -9,23 +9,23 @@ import javax.inject.Inject
 class SearchReposAdapter @Inject constructor() :
     CoreDataBoundAdapter<ItemSearchRepoBinding>() {
 
-    private val repositories = mutableListOf<SearchRepoItem>()
+    private val items = mutableListOf<SearchRepoItem>()
 
     override fun bindItem(
         holder: CoreDataBoundViewHolder<ItemSearchRepoBinding>?,
         position: Int,
         payloads: List<Any?>?
     ) {
-        holder?.binding?.data = repositories.getOrNull(position)
+        holder?.binding?.data = items.getOrNull(position)
     }
 
     override fun getItemLayoutId(position: Int) = R.layout.item_search_repo
 
-    override fun getItemCount() = repositories.size
+    override fun getItemCount() = items.size
 
-    fun addRepositories(repositories: List<SearchRepoItem>) {
-        this.repositories.clear()
-        this.repositories.addAll(repositories)
-        notifyItemRangeChanged(0, itemCount)
+    fun addItems(items: List<SearchRepoItem>) {
+        this.items.clear()
+        this.items.addAll(items)
+        notifyDataSetChanged()
     }
 }

@@ -18,10 +18,15 @@ class ReposRepository @Inject constructor(
 
     override fun clearRepos() = localDataSource.clearRepos()
 
-    override fun getSearchedRepos(query: String, sort: String): Observable<List<RepoEntity>> {
-        return remoteDataSource.getSearchedRepos(query, sort)
+    override fun getSearchedRepos(query: String): Observable<List<RepoEntity>> {
+        return remoteDataSource.getSearchedRepos(query)
             .map { mapSearchReposResponseToModel(it) }
             .flatMap { updateAndLoadGitRepos(it) }
+    }
+
+    override fun loadRepos(): Observable<List<RepoEntity>> {
+        return localDataSource.loadRepos()
+            .map { mapRepoModelListToEntityList(it) }
     }
 
     override fun loadRepo(name: String) =

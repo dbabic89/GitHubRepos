@@ -11,13 +11,11 @@ class GetSearchReposUseCase @Inject constructor(
 ) : ObservableUseCase<List<RepoEntity>>() {
 
     private var query = EMPTY_STRING
-    private var sort = EMPTY_STRING
 
-    fun setup(query: String, sort: String): GetSearchReposUseCase {
+    fun setup(query: String): GetSearchReposUseCase {
         this.query = query
-        this.sort = sort
         return this
     }
 
-    override fun buildUseCaseObservable() = repository.getSearchedRepos(query, sort)
+    override fun buildUseCaseObservable() = repository.getSearchedRepos(query)
 }

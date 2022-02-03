@@ -25,7 +25,7 @@ class RemoteDataSourceTests {
 
         remoteDataSource = RemoteDataSource(service)
 
-        every { service.getSearchedRepos(any(), any()) } returns
+        every { service.getSearchedRepos(any()) } returns
                 Observable.fromArray(fakeSearchResponse)
     }
 
@@ -33,12 +33,11 @@ class RemoteDataSourceTests {
     fun remoteDataSource_getSearchedRepos_returnsListOf2() {
         // GIVEN
         val query = "android"
-        val sort = "stars"
         val expected = fakeSearchResponse
 
         remoteDataSource
             // WHEN
-            .getSearchedRepos(query, sort)
+            .getSearchedRepos(query)
             .test()
             // THEN
             .assertValue(expected)
@@ -49,13 +48,12 @@ class RemoteDataSourceTests {
     fun remoteDataSource_getSearchedRepos_verifyFunctionCalls() {
         // GIVEN
         val query = "android"
-        val sort = "stars"
 
         remoteDataSource
             // WHEN
-            .getSearchedRepos(query, sort)
+            .getSearchedRepos(query)
             .test()
         // THEN
-        verify(exactly = 1) { service.getSearchedRepos(any(), any()) }
+        verify(exactly = 1) { service.getSearchedRepos(any()) }
     }
 }

@@ -1,12 +1,9 @@
 package com.dariobabic.githubrepos.features.repos.data
 
+import com.dariobabic.githubrepos.features.repos.*
 import com.dariobabic.githubrepos.features.repos.data.local.data_sources.LocalDataSourceContract
 import com.dariobabic.githubrepos.features.repos.data.remote.data_sources.RemoteDataSourceContract
 import com.dariobabic.githubrepos.features.repos.data.repositories.ReposRepository
-import com.dariobabic.githubrepos.features.repos.fakeEntity1
-import com.dariobabic.githubrepos.features.repos.fakeModel1
-import com.dariobabic.githubrepos.features.repos.fakeModelListOf2
-import com.dariobabic.githubrepos.features.repos.fakeSearchResponse
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -40,7 +37,7 @@ class RepositoryTests {
                 Observable.fromArray(fakeModelListOf2)
         every { localDataSource.loadRepo(any()) } returns Single.just(fakeModel1)
 
-        every { remoteDataSource.getSearchedRepos(any(), any()) } returns
+        every { remoteDataSource.getSearchedRepos(any()) } returns
                 Observable.fromArray(fakeSearchResponse)
     }
 
@@ -48,11 +45,10 @@ class RepositoryTests {
     fun repository_getSearchedRepos_returnsCompleted() {
         // GIVEN
         val query = "android"
-        val sort = "stars"
 
         repository
             // WHEN
-            .getSearchedRepos(query, sort)
+            .getSearchedRepos(query)
             .test()
             // THEN
             .assertComplete()
@@ -62,15 +58,14 @@ class RepositoryTests {
     fun repository_getSearchedRepos_verifyOrder() {
         // GIVEN
         val query = "android"
-        val sort = "stars"
 
         repository
             // WHEN
-            .getSearchedRepos(query, sort)
+            .getSearchedRepos(query)
             .test()
         // THEN
         verifyOrder {
-            remoteDataSource.getSearchedRepos(any(), any())
+            remoteDataSource.getSearchedRepos(any())
             localDataSource.saveRepos(any())
         }
     }
@@ -79,15 +74,38 @@ class RepositoryTests {
     fun repository_getSearchedRepos_verifyFunctionCalls() {
         // GIVEN
         val query = "android"
-        val sort = "stars"
 
         repository
             // WHEN
-            .getSearchedRepos(query, sort)
+            .getSearchedRepos(query)
             .test()
         // THEN
-        verify(exactly = 1) { remoteDataSource.getSearchedRepos(any(), any()) }
+        verify(exactly = 1) { remoteDataSource.getSearchedRepos(any()) }
         verify(exactly = 1) { localDataSource.saveRepos(any()) }
+    }
+
+    @Test
+    fun repository_loadRepos_returnsCompleted() {
+        val expected = fakeEntityListOf2
+        // GIVEN
+        repository
+            // WHEN
+            .loadRepos()
+            .test()
+            // THEN
+            .assertValue(expected)
+            .assertComplete()
+    }
+
+    @Test
+    fun repository_loadRepos_verifyFunctionCalls() {
+        // GIVEN
+        repository
+            // WHEN
+            .loadRepos()
+            .test()
+        // THEN
+        verify(exactly = 1) { localDataSource.loadRepos() }
     }
 
     @Test
@@ -113,7 +131,7 @@ class RepositoryTests {
     }
 
     @Test
-    fun repository_loadRepos_returnsCompleted() {
+    fun repository_loadRepo_returnsCompleted() {
         // GIVEN
         val name = "GitHubRepos"
         val entity = fakeEntity1
@@ -128,7 +146,7 @@ class RepositoryTests {
     }
 
     @Test
-    fun repository_loadRepos_verifyFunctionCalls() {
+    fun repository_loadRepo_verifyFunctionCalls() {
         // GIVEN
         val name = "GitHubRepos"
 

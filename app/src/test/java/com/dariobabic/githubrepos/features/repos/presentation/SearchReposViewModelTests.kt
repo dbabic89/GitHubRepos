@@ -1,8 +1,10 @@
 package com.dariobabic.githubrepos.features.repos.presentation
 
 import com.dariobabic.githubrepos.core.constants.EMPTY_STRING
+import com.dariobabic.githubrepos.core.constants.SORT_BY_UPDATED
 import com.dariobabic.githubrepos.features.repos.domain.use_cases.ClearReposUseCase
 import com.dariobabic.githubrepos.features.repos.domain.use_cases.GetSearchReposUseCase
+import com.dariobabic.githubrepos.features.repos.domain.use_cases.SortReposUseCase
 import com.dariobabic.githubrepos.features.repos.fakeEntityListOf2
 import com.dariobabic.githubrepos.features.repos.presentation.search.SearchReposCallback
 import com.dariobabic.githubrepos.features.repos.presentation.search.SearchReposViewModel
@@ -21,6 +23,9 @@ class SearchReposViewModelTests {
     lateinit var getSearchReposUseCase: GetSearchReposUseCase
 
     @MockK
+    lateinit var sortReposUseCase: SortReposUseCase
+
+    @MockK
     lateinit var clearReposUseCase: ClearReposUseCase
 
     @MockK
@@ -32,11 +37,16 @@ class SearchReposViewModelTests {
     fun setup() {
         MockKAnnotations.init(this)
 
-        viewModel = SearchReposViewModel(getSearchReposUseCase, clearReposUseCase)
+        viewModel = SearchReposViewModel(getSearchReposUseCase, sortReposUseCase, clearReposUseCase)
 
-        every { getSearchReposUseCase.setup(any(), any()) } returns getSearchReposUseCase
+        every { getSearchReposUseCase.setup(any()) } returns getSearchReposUseCase
         every { getSearchReposUseCase.execute(any()) } returns Unit
         every { getSearchReposUseCase.buildUseCaseObservable() } returns
+                Observable.fromArray(fakeEntityListOf2)
+
+        every { sortReposUseCase.setup(any()) } returns sortReposUseCase
+        every { sortReposUseCase.execute(any()) } returns Unit
+        every { sortReposUseCase.buildUseCaseObservable() } returns
                 Observable.fromArray(fakeEntityListOf2)
 
         every { clearReposUseCase.execute(any()) } returns Unit
@@ -52,6 +62,21 @@ class SearchReposViewModelTests {
         val expected = fakeEntityListOf2
         // WHEN
         getSearchReposUseCase
+            .buildUseCaseObservable()
+            .test()
+            // THEN
+            .assertValue(expected)
+            .assertComplete()
+    }
+
+    @Test
+    fun viewModel_sortRepos_returnsCompleted() {
+        // GIVEN
+        val expected = fakeEntityListOf2
+        val sortBy = SORT_BY_UPDATED
+        // WHEN
+        sortReposUseCase
+            .setup(sortBy)
             .buildUseCaseObservable()
             .test()
             // THEN

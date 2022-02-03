@@ -4,6 +4,10 @@ const val EMPTY_STRING = ""
 const val SLASH = "/"
 const val DASH = "-"
 
+const val SORT_BY_STARS = "stars"
+const val SORT_BY_FORKS = "forks"
+const val SORT_BY_UPDATED = "updated"
+
 const val BASE_API_URL = "https://api.github.com/"
 const val BASE_GITHUB_URL = "https://github.com/"
 const val GITHUB_ACCESS_CODE = "code"

@@ -10,8 +10,6 @@ interface ReposService {
     @GET("search/repositories")
     fun getSearchedRepos(
         @Query("q")
-        query: String,
-        @Query("sort")
-        sort: String
+        query: String
     ): Observable<SearchReposResponse>
 }
